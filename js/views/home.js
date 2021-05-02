@@ -1,6 +1,7 @@
-"use strict";
+
 import utility from "../utility/utility.js";
 import Restaurant from "./restaurant.js";
+
 class Home {
   constructor() {
     this.restaurants = [];
@@ -17,6 +18,14 @@ class Home {
       this.render();
       this.addEvents();
     });
+  }
+
+  addEvents() {
+    this.handleSearch();
+    this.handleFilter();
+    this.handleSort();
+    this.toggleFavourite();
+    this.applyFavouriteFilter();
   }
 
   getData() {
@@ -66,7 +75,7 @@ class Home {
     this.html = utility.getHTML(template);
     const container = document.querySelector("#maincontainer");
     container.appendChild(this.html);
-    this.updateFavBtnStyle();
+    this.updateFavButtonStyle();
     this.generateRestaurantsView(this.restaurants);
   }
 
@@ -100,14 +109,6 @@ class Home {
       const restaurantsContainer = this.html.querySelector(".restuarants");
       restaurantsContainer.innerHTML = "No restaurant found for this criteria";
     }
-  }
-
-  addEvents() {
-    this.handleSearch();
-    this.handleFilter();
-    this.handleSort();
-    this.toggleFavourite();
-    this.applyFavouriteFilter();
   }
 
   handleSearch() {
@@ -161,20 +162,20 @@ class Home {
     utility.addEventListener("click", filter, event => {
       event.stopPropagation();
       this.showOnlyFavourites = !this.showOnlyFavourites;
-      this.updateFavBtnStyle();
+      this.updateFavButtonStyle();
       this.generateRestaurantsView();
-      utility.resetLocalStorage("mydata-fav", this.showOnlyFavourites);
+      utility.setLocalStorage("mydata-fav", this.showOnlyFavourites);
     });
   }
 
-  updateFavBtnStyle() {
+  updateFavButtonStyle() {
     this.html
       .querySelector(".favourites")
       .classList.toggle("selected", this.showOnlyFavourites);
   }
 
   updateLocalStorage() {
-    utility.resetLocalStorage("mydata", this.restaurants);
+    utility.setLocalStorage("mydata", this.restaurants);
   }
 }
 export default Home;

@@ -1,4 +1,4 @@
-"use strict";
+
 import utility from "../utility/utility.js";
 class Restaurant {
   constructor(data) {

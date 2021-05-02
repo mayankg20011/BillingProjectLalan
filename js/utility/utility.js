@@ -1,4 +1,4 @@
-"use strict";
+
 class Utility {
   addEventListener(event, element, handler) {
     if (document.addEventListener) {
@@ -24,28 +24,20 @@ class Utility {
     }
   }
 
-  addToLocalStorage(key, item) {
-    let value = this.getFromLocalStorage(key);
-    value.push(item);
+  setLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  resetLocalStorage(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-
-  debounce(callback, delay) {
+  debounce(fn, delay){
     let timer;
-    return (...args) => {
-      const self = this;
-      if (timer) {
+    return function(...args){
+        let context = this;
         clearTimeout(timer);
-      }
-      timer = setTimeout(() => {
-        callback.call(self, ...args);
-      }, delay);
-    };
-  }
+        timer = setTimeout(() => {
+            fn.apply(context, args);
+        }, delay);
+    }
+}
 
   getJSONData(url) {
     return fetch(url).then(resp => resp.json());

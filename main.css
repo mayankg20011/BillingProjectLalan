@@ -1,0 +1,14 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  font: 14px Arial, sans-serif;
+  position: relative;
+}
+
+.maincontainer {
+  padding: 30px 20px;
+}
